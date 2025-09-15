@@ -5,13 +5,14 @@ metadata:
   namespace: argocd
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
     - argocd.subrotosharma.site
-    secretName: argocd-tls
+    secretName: argocd-https-tls
   rules:
   - host: argocd.subrotosharma.site
     http:
