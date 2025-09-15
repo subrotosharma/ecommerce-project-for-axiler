@@ -1,0 +1,17 @@
+{
+    "Changes": [
+        {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "argocd.subrotosharma.site",
+                "Type": "CNAME",
+                "TTL": 300,
+                "ResourceRecords": [
+                    {
+                        "Value": "a1368a3a41385463db8811dc5c321dae-1956518868.us-east-1.elb.amazonaws.com"
+                    }
+                ]
+            }
+        }
+    ]
+}
