@@ -378,12 +378,12 @@ Feature Branch � Dev �� Staging → Production
 ### ArgoCD
 - **URL**: https://argocd.subrotosharma.site
 - **Username**: admin
-- **Password**: [Check AWS Secrets Manager: argocd-admin-password]
+- **Password**: Contact for demo credentials
 
 ### Grafana
 - **URL**: https://grafana.subrotosharma.site
 - **Username**: admin
-- **Password**: [Check ConfigMap: monitoring/grafana-credentials]
+- **Password**: Contact for demo credentials
 
 ### Prometheus
 - **URL**: https://prometheus.subrotosharma.site
@@ -474,8 +474,10 @@ This project represents 8 weeks of hands-on learning and implementation:
 ---
 
 ## Live Deployment Status
-- **E-Commerce Platform**: https://axiler.subrotosharma.site 
-- **Grafana Dashboard**: https://grafana.subrotosharma.site   
-- **Prometheus Metrics**: https://prometheus.subrotosharma.site 
-- **ArgoCD GitOps**: https://argocd.subrotosharma.site 
+- **E-Commerce Platform**: https://axiler.subrotosharma.site ✅ LIVE
+- **Grafana Dashboard**: https://grafana.subrotosharma.site ✅ LIVE  
+- **Prometheus Metrics**: https://prometheus.subrotosharma.site ✅ LIVE
+- **ArgoCD GitOps**: https://argocd.subrotosharma.site ✅ LIVE
+
+**Note**: All services are running live on AWS EKS. Contact for demo access credentials. 
 
