@@ -110,8 +110,8 @@ Observability Stack:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/devops-infrastructure.git
-cd devops-infrastructure
+git clone https://github.com/subrotosharma/ecommerce-project-for-axiler.git
+cd ecommerce-project-for-axiler
 
 # Set up environment variables
 cp .env.example .env
@@ -129,7 +129,7 @@ make get-urls
 
 ```
 devops-infrastructure/
-���─ terraform/                 # Infrastructure as Code
+���─ terraform/                 # Infrastructure as Code
    ├── environments/         # Environment-specific configs
    │   ├── dev/
    │   ├── staging/
@@ -140,7 +140,7 @@ devops-infrastructure/
    │   ├── vpc/
    │   └── iam/
    └── backend.tf
-���─ kubernetes/               # Kubernetes manifests
+���─ kubernetes/               # Kubernetes manifests
    ├── base/                # Base configurations
    │   ├── namespaces/
    │   ├── services/
@@ -150,7 +150,7 @@ devops-infrastructure/
    │   ├── staging/
    │   └── prod/
    └── argocd/             # ArgoCD applications
-���─ helm/                    # Helm charts
+���─ helm/                    # Helm charts
    ├── charts/
    │   ├── frontend/
    │   ├── api-gateway/
@@ -158,40 +158,40 @@ devops-infrastructure/
    │   ├── order-service/
    │   └── user-service/
    └── values/
-���─ ci-cd/                   # CI/CD configurations
+���─ ci-cd/                   # CI/CD configurations
    ├── github-actions/
    │   ├── workflows/
    │   └── actions/
    ├── argocd/
    └── jenkins/            # Alternative CI option
-���─ monitoring/              # Monitoring stack
+���─ monitoring/              # Monitoring stack
    ├── prometheus/
    ├── grafana/
    │   └── dashboards/
    ├── elk/
    └── alerts/
-���─ scripts/                 # Automation scripts
+���─ scripts/                 # Automation scripts
    ├── setup/
    ├── deploy/
    └── utils/
-���─ docker/                  # Docker configurations
+���─ docker/                  # Docker configurations
    ├── images/
    └── docker-compose.yml
-���─ ansible/                 # Configuration management
+���─ ansible/                 # Configuration management
    ├── playbooks/
    └── roles/
-���─ docs/                    # Documentation
+���─ docs/                    # Documentation
    ├── architecture/
    ├── runbooks/
    └── api/
-���─ tests/                   # Test suites
+���─ tests/                   # Test suites
    ├── integration/
    ├── load/
    └── security/
-���─ .github/                 # GitHub specific
+���─ .github/                 # GitHub specific
    └── workflows/
-���─ Makefile                 # Build automation
-���─ .env.example             # Environment template
+���─ Makefile                 # Build automation
+���─ .env.example             # Environment template
 ── README.md               # This file
 ```
 
@@ -275,15 +275,14 @@ kubectl apply -f kubernetes/argocd/
 ### Step 6: Deploy Applications
 
 ```bash
-# Using Helm
-helm install frontend ./helm/charts/frontend --namespace default
-helm install api-gateway ./helm/charts/api-gateway --namespace default
-helm install product-service ./helm/charts/product-service --namespace default
-helm install order-service ./helm/charts/order-service --namespace default
-helm install user-service ./helm/charts/user-service --namespace default
+# Deploy using kubectl manifests
+kubectl apply -f kubernetes/manifests/
 
-# Or using kubectl with Kustomize
-kubectl apply -k kubernetes/overlays/dev
+# Or deploy via ArgoCD (GitOps)
+kubectl apply -f argocd/ecommerce-app.yaml
+
+# Verify deployments
+kubectl get pods,svc,ingress
 ```
 
 ### Step 7: Configure GitHub Actions
@@ -303,32 +302,23 @@ kubectl apply -k kubernetes/overlays/dev
 ### 1. Network Security
 - **VPC Isolation**: Private subnets for EKS nodes
 - **Security Groups**: Restrictive ingress/egress rules
-- **Network Policies**: Kubernetes NetworkPolicies using Calico
-- **Service Mesh**: Istio for mTLS between services
+- **Network Policies**: Kubernetes NetworkPolicies implemented
 
 ### 2. Access Control
-- **RBAC**: Fine-grained Kubernetes RBAC policies
+- **RBAC**: Kubernetes RBAC policies
 - **IAM Roles**: Service accounts with minimal permissions
-- **MFA**: Required for AWS console access
-- **SSO Integration**: OIDC provider integration
 
 ### 3. Secrets Management
-- **AWS Secrets Manager**: External secrets storage
-- **Sealed Secrets**: Encrypted secrets in Git
-- **Rotation Policies**: Automatic secret rotation
+- **AWS Secrets Manager**: RDS and Redis credentials stored securely
 - **Encryption at Rest**: EKS envelope encryption
 
 ### 4. Container Security
-- **Image Scanning**: Trivy in CI/CD pipeline
-- **Signed Images**: Cosign for image signing
-- **Admission Control**: OPA Gatekeeper policies
-- **Runtime Protection**: Falco for anomaly detection
+- **Image Scanning**: Trivy vulnerability scanning in CI/CD pipeline
+- **SSL/TLS**: Let's Encrypt certificates for all services
 
-### 5. Compliance & Auditing
-- **Audit Logging**: CloudTrail and Kubernetes audit logs
-- **Compliance Scanning**: Regular CIS benchmark scans
-- **Policy as Code**: OPA policies in Git
-- **SIEM Integration**: Log forwarding to SIEM
+### 5. Infrastructure Security
+- **Private Subnets**: EKS worker nodes in private subnets
+- **Security Groups**: Controlled access between services
 
 ## Monitoring & Observability
 
@@ -338,29 +328,20 @@ kubectl apply -k kubernetes/overlays/dev
 - **Business Metrics**: Orders, revenue, user activity
 - **Custom Dashboards**: Service-specific dashboards
 
-### Logging (EFK Stack)
-- **Centralized Logging**: All logs in Elasticsearch
-- **Structured Logging**: JSON format
-- **Log Correlation**: Request ID tracking
-- **Retention Policies**: 30 days hot, 90 days warm
-
-### Tracing (Jaeger)
-- **Distributed Tracing**: End-to-end request tracking
-- **Performance Analysis**: Bottleneck identification
-- **Service Dependencies**: Automatic dependency mapping
+### Logging
+- **Container Logs**: Kubernetes native logging
+- **Application Logs**: Centralized via kubectl logs
 
 ### Alerting
-- **Multi-Channel**: Slack, PagerDuty, Email
-- **Severity Levels**: Critical, Warning, Info
-- **Runbooks**: Automated runbook links
-- **Escalation Policies**: Tiered on-call rotation
+- **Prometheus Alerts**: Basic alerting rules configured
+- **Grafana Notifications**: Dashboard-based alerts
 
 ## CI/CD Pipeline
 
 ### GitHub Actions Workflow
 
 ```yaml
-Build � Test �� Scan → Package → Deploy to Dev → Integration Tests → Deploy to Staging → Smoke Tests → Manual Approval → Deploy to Prod
+Build � Test �� Scan → Package → Deploy to Dev → Integration Tests → Deploy to Staging → Smoke Tests → Manual Approval → Deploy to Prod
 ```
 
 ### Pipeline Stages
@@ -379,7 +360,7 @@ Build � Test �� Scan → Package → Deploy to Dev → Integration Tests → Dep
 ### Environment Promotion
 
 ```
-Feature Branch � Dev �� Staging → Production
+Feature Branch � Dev �� Staging → Production
                  ↓        ↓          ↓
   PR Tests    E2E Tests  Load Tests  Canary
 ```
@@ -392,27 +373,25 @@ Feature Branch � Dev �� Staging → Production
 | Staging    | 2        | 1 CPU, 1Gi | Yes (HPA) | Full |
 | Production | 3+       | 2 CPU, 2Gi | Yes (HPA+VPA) | Full + APM |
 
-## Demo Credentials
+## Live Demo Credentials
 
 ### ArgoCD
-- **URL**: https://argocd.demo.yourdomain.com
+- **URL**: https://argocd.subrotosharma.site
 - **Username**: admin
-- **Password**: [Check AWS Secrets Manager: argocd-admin-password]
+- **Password**: Dl23kHFfOL44boNC
 
 ### Grafana
-- **URL**: https://grafana.demo.yourdomain.com
+- **URL**: https://grafana.subrotosharma.site
 - **Username**: admin
-- **Password**: [Check ConfigMap: monitoring/grafana-credentials]
+- **Password**: prom-operator
 
-### Kibana
-- **URL**: https://kibana.demo.yourdomain.com
-- **Username**: elastic
-- **Password**: [Check Secret: elastic-credentials]
+### Prometheus
+- **URL**: https://prometheus.subrotosharma.site
+- **Access**: Direct metrics access
 
-### Application
-- **Frontend**: https://shop.demo.yourdomain.com
-- **API**: https://api.demo.yourdomain.com
-- **Admin**: https://admin.demo.yourdomain.com
+### E-Commerce Application
+- **Frontend**: https://axiler.subrotosharma.site
+- **Features**: Product catalog, shopping cart, responsive design
 
 ## Q&A
 
@@ -469,32 +448,11 @@ The biggest challenge was implementing zero-downtime deployments with database m
 ## Advanced Features
 
 - **GitOps with ArgoCD**: Declarative, versioned infrastructure
-- **Service Mesh (Istio)**: Advanced traffic management
-- **Chaos Engineering**: Litmus for resilience testing
-- **Cost Optimization**: Spot instances, resource right-sizing
-- **Multi-Region**: DR setup with cross-region replication
+- **Auto-scaling**: Horizontal Pod Autoscaler (HPA) implemented
+- **SSL/TLS**: Automatic certificate management with Let's Encrypt
+- **Multi-Environment**: Dev/Staging/Prod configurations
 
-## Additional Resources
 
-- [Architecture Decision Records](docs/architecture/adr/)
-- [Runbooks](docs/runbooks/)
-- [API Documentation](docs/api/)
-- [Performance Benchmarks](docs/performance/)
-- [Security Policies](docs/security/)
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-- **Email**: subroto.subro@gmail.com
-- **LinkedIn**: [Subroto Sharma](https://linkedin.com/in/subrotosharma)
-- **GitHub**: [@subrotosharma](https://github.com/subrotosharma)
 
 ## Development Documentation
 
@@ -513,13 +471,9 @@ This project represents 8 weeks of hands-on learning and implementation:
 
 ---
 
-Built with ��� using modern DevOps practices
-
 ## Live Deployment Status
 - **E-Commerce Platform**: https://axiler.subrotosharma.site 
 - **Grafana Dashboard**: https://grafana.subrotosharma.site   
 - **Prometheus Metrics**: https://prometheus.subrotosharma.site 
 - **ArgoCD GitOps**: https://argocd.subrotosharma.site 
 
-## Project Completion: 100%
-All DevOps requirements implemented and deployed successfully!
