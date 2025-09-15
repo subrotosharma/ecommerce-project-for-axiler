@@ -1,10 +1,10 @@
 # Cloud-Native E-Commerce Platform Infrastructure
 
-## 🚀 Project Overview
+## Project Overview
 
 This project demonstrates a production-ready microservices infrastructure for an e-commerce platform, showcasing modern DevOps practices including Kubernetes orchestration, GitOps-based CI/CD, comprehensive monitoring, and security best practices.
 
-## 📋 Table of Contents
+## Table of Contents
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
@@ -18,52 +18,52 @@ This project demonstrates a production-ready microservices infrastructure for an
 - [Demo Credentials](#demo-credentials)
 - [Q&A](#qa)
 
-## 🏗 Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Internet                                 │
-└─────────────────────────────────────────────────────────────────┘
-                                │
-                    ┌───────────▼───────────┐
-                    │    AWS ALB/Ingress    │
-                    └───────────┬───────────┘
-                                │
-                    ┌───────────▼───────────┐
-                    │    NGINX Ingress      │
-                    │     Controller         │
-                    └───────────┬───────────┘
-                                │
-        ┌───────────────────────┼───────────────────────┐
-        │                       │                       │
-┌───────▼────────┐    ┌────────▼────────┐    ┌────────▼────────┐
-│   Frontend     │    │   API Gateway   │    │   Admin Panel   │
-│   Service      │    │    Service      │    │    Service      │
-└────────────────┘    └────────┬────────┘    └─────────────────┘
-                               │
-        ┌──────────────────────┼──────────────────────┐
-        │                      │                      │
-┌───────▼────────┐    ┌───────▼────────┐    ┌───────▼────────┐
-│    Product     │    │     Order      │    │     User       │
-│    Service     │    │    Service     │    │    Service     │
-└────────┬───────┘    └────────┬───────┘    └───────┬────────┘
-         │                     │                     │
-         └─────────────────────┼─────────────────────┘
-                               │
-                    ┌──────────▼──────────┐
-                    │                      │
-                    │    PostgreSQL /     │
-                    │      MongoDB         │
-                    │    (RDS/Atlas)      │
-                    └──────────────────────┘
+─────────────────────────────────────────────────────────────────┐
+                         Internet                                 │
+─────────────────────────────────────────────────────────────────┘
+                                
+                    ───────────▼───────────┐
+                        AWS ALB/Ingress    │
+                    ───────────┬───────────┘
+                                
+                    ───────────▼───────────┐
+                        NGINX Ingress      │
+                         Controller         │
+                    ───────────┬───────────┘
+                                
+        ───────────────────────┼───────────────────────┐
+                               │                       │
+───────▼────────┐    ┌────────▼────────┐    ┌────────▼────────┐
+   Frontend     │    │   API Gateway   │    │   Admin Panel   │
+   Service      │    │    Service      │    │    Service      │
+────────────────┘    └────────┬────────┘    └─────────────────┘
+                               
+        ──────────────────────┼──────────────────────┐
+                              │                      │
+───────▼────────┐    ┌───────▼────────┐    ┌───────▼────────┐
+    Product     │    │     Order      │    │     User       │
+    Service     │    │    Service     │    │    Service     │
+────────┬───────┘    └────────┬───────┘    └───────┬────────┘
+                              │                     │
+         ─────────────────────┼─────────────────────┘
+                               
+                    ──────────▼──────────┐
+                                          │
+                        PostgreSQL /     │
+                          MongoDB         │
+                        (RDS/Atlas)      │
+                    ──────────────────────┘
 
 Observability Stack:
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ Prometheus  │  │   Grafana   │  │     EFK     │  │   Jaeger    │
-└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+ Prometheus  │  │   Grafana   │  │     EFK     │  │   Jaeger    │
+─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
 ```
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Core Infrastructure
 - **Cloud Provider**: AWS (EKS)
@@ -94,7 +94,7 @@ Observability Stack:
 - **Image Scanning**: Trivy
 - **RBAC**: Kubernetes native RBAC
 
-## 📦 Prerequisites
+## Prerequisites
 
 - AWS Account with appropriate permissions
 - AWS CLI configured
@@ -106,7 +106,7 @@ Observability Stack:
 - GitHub Account
 - Domain name (optional, for production)
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -125,77 +125,77 @@ make deploy-all
 make get-urls
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 devops-infrastructure/
-├── terraform/                 # Infrastructure as Code
-│   ├── environments/         # Environment-specific configs
-│   │   ├── dev/
-│   │   ├── staging/
-│   │   └── prod/
-│   ├── modules/             # Reusable Terraform modules
-│   │   ├── eks/
-│   │   ├── rds/
-│   │   ├── vpc/
-│   │   └── iam/
-│   └── backend.tf
-├── kubernetes/               # Kubernetes manifests
-│   ├── base/                # Base configurations
-│   │   ├── namespaces/
-│   │   ├── services/
-│   │   └── deployments/
-│   ├── overlays/           # Environment overlays
-│   │   ├── dev/
-│   │   ├── staging/
-│   │   └── prod/
-│   └── argocd/             # ArgoCD applications
-├── helm/                    # Helm charts
-│   ├── charts/
-│   │   ├── frontend/
-│   │   ├── api-gateway/
-│   │   ├── product-service/
-│   │   ├── order-service/
-│   │   └── user-service/
-│   └── values/
-├── ci-cd/                   # CI/CD configurations
-│   ├── github-actions/
-│   │   ├── workflows/
-│   │   └── actions/
-│   ├── argocd/
-│   └── jenkins/            # Alternative CI option
-├── monitoring/              # Monitoring stack
-│   ├── prometheus/
-│   ├── grafana/
-│   │   └── dashboards/
-│   ├── elk/
-│   └── alerts/
-├── scripts/                 # Automation scripts
-│   ├── setup/
-│   ├── deploy/
-│   └── utils/
-├── docker/                  # Docker configurations
-│   ├── images/
-│   └── docker-compose.yml
-├── ansible/                 # Configuration management
-│   ├── playbooks/
-│   └── roles/
-├── docs/                    # Documentation
-│   ├── architecture/
-│   ├── runbooks/
-│   └── api/
-├── tests/                   # Test suites
-│   ├── integration/
-│   ├── load/
-│   └── security/
-├── .github/                 # GitHub specific
-│   └── workflows/
-├── Makefile                 # Build automation
-├── .env.example             # Environment template
-└── README.md               # This file
+���─ terraform/                 # Infrastructure as Code
+   ├── environments/         # Environment-specific configs
+   │   ├── dev/
+   │   ├── staging/
+   │   └── prod/
+   ├── modules/             # Reusable Terraform modules
+   │   ├── eks/
+   │   ├── rds/
+   │   ├── vpc/
+   │   └── iam/
+   └── backend.tf
+���─ kubernetes/               # Kubernetes manifests
+   ├── base/                # Base configurations
+   │   ├── namespaces/
+   │   ├── services/
+   │   └── deployments/
+   ├── overlays/           # Environment overlays
+   │   ├── dev/
+   │   ├── staging/
+   │   └── prod/
+   └── argocd/             # ArgoCD applications
+���─ helm/                    # Helm charts
+   ├── charts/
+   │   ├── frontend/
+   │   ├── api-gateway/
+   │   ├── product-service/
+   │   ├── order-service/
+   │   └── user-service/
+   └── values/
+���─ ci-cd/                   # CI/CD configurations
+   ├── github-actions/
+   │   ├── workflows/
+   │   └── actions/
+   ├── argocd/
+   └── jenkins/            # Alternative CI option
+���─ monitoring/              # Monitoring stack
+   ├── prometheus/
+   ├── grafana/
+   │   └── dashboards/
+   ├── elk/
+   └── alerts/
+���─ scripts/                 # Automation scripts
+   ├── setup/
+   ├── deploy/
+   └── utils/
+���─ docker/                  # Docker configurations
+   ├── images/
+   └── docker-compose.yml
+���─ ansible/                 # Configuration management
+   ├── playbooks/
+   └── roles/
+���─ docs/                    # Documentation
+   ├── architecture/
+   ├── runbooks/
+   └── api/
+���─ tests/                   # Test suites
+   ├── integration/
+   ├── load/
+   └── security/
+���─ .github/                 # GitHub specific
+   └── workflows/
+���─ Makefile                 # Build automation
+���─ .env.example             # Environment template
+── README.md               # This file
 ```
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### Step 1: AWS Infrastructure Setup
 
@@ -298,7 +298,7 @@ kubectl apply -k kubernetes/overlays/dev
 
 2. Push code to trigger workflows
 
-## 🔐 Security Measures
+## Security Measures
 
 ### 1. Network Security
 - **VPC Isolation**: Private subnets for EKS nodes
@@ -330,7 +330,7 @@ kubectl apply -k kubernetes/overlays/dev
 - **Policy as Code**: OPA policies in Git
 - **SIEM Integration**: Log forwarding to SIEM
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 ### Metrics (Prometheus + Grafana)
 - **System Metrics**: CPU, Memory, Disk, Network
@@ -355,12 +355,12 @@ kubectl apply -k kubernetes/overlays/dev
 - **Runbooks**: Automated runbook links
 - **Escalation Policies**: Tiered on-call rotation
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### GitHub Actions Workflow
 
 ```yaml
-Build → Test → Scan → Package → Deploy to Dev → Integration Tests → Deploy to Staging → Smoke Tests → Manual Approval → Deploy to Prod
+Build � Test �� Scan → Package → Deploy to Dev → Integration Tests → Deploy to Staging → Smoke Tests → Manual Approval → Deploy to Prod
 ```
 
 ### Pipeline Stages
@@ -374,13 +374,13 @@ Build → Test → Scan → Package → Deploy to Dev → Integration Tests → 
 7. **Deploy Staging**: After passing dev tests
 8. **Deploy Prod**: Manual approval required
 
-## 🌍 Multi-Environment Strategy
+## Multi-Environment Strategy
 
 ### Environment Promotion
 
 ```
-Feature Branch → Dev → Staging → Production
-     ↓            ↓        ↓          ↓
+Feature Branch � Dev �� Staging → Production
+                 ↓        ↓          ↓
   PR Tests    E2E Tests  Load Tests  Canary
 ```
 
@@ -392,7 +392,7 @@ Feature Branch → Dev → Staging → Production
 | Staging    | 2        | 1 CPU, 1Gi | Yes (HPA) | Full |
 | Production | 3+       | 2 CPU, 2Gi | Yes (HPA+VPA) | Full + APM |
 
-## 🔑 Demo Credentials
+## Demo Credentials
 
 ### ArgoCD
 - **URL**: https://argocd.demo.yourdomain.com
@@ -414,7 +414,7 @@ Feature Branch → Dev → Staging → Production
 - **API**: https://api.demo.yourdomain.com
 - **Admin**: https://admin.demo.yourdomain.com
 
-## ❓ Q&A
+## Q&A
 
 ### 1. Why did you choose this project?
 
@@ -466,7 +466,7 @@ The biggest challenge was implementing zero-downtime deployments with database m
 - **Migration Testing**: Automated migration testing in CI/CD
 - **Rollback Plan**: Always maintain rollback capability
 
-## 🚀 Advanced Features
+## Advanced Features
 
 - **GitOps with ArgoCD**: Declarative, versioned infrastructure
 - **Service Mesh (Istio)**: Advanced traffic management
@@ -474,7 +474,7 @@ The biggest challenge was implementing zero-downtime deployments with database m
 - **Cost Optimization**: Spot instances, resource right-sizing
 - **Multi-Region**: DR setup with cross-region replication
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Architecture Decision Records](docs/architecture/adr/)
 - [Runbooks](docs/runbooks/)
@@ -482,27 +482,27 @@ The biggest challenge was implementing zero-downtime deployments with database m
 - [Performance Benchmarks](docs/performance/)
 - [Security Policies](docs/security/)
 
-## 🤝 Contributing
+## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Contact
+## Contact
 
 - **Email**: subroto.subro@gmail.com
 - **LinkedIn**: [Subroto Sharma](https://linkedin.com/in/subrotosharma)
 - **GitHub**: [@subrotosharma](https://github.com/subrotosharma)
 
-## 📚 Development Documentation
+## Development Documentation
 
 - [Development Notes & Learning Process](docs/DEVELOPMENT_NOTES.md)
 - [Troubleshooting Guide](TROUBLESHOOTING.md)
 - [Architecture Decisions](docs/architecture/)
 
-## 🎯 Project Highlights
+## Project Highlights
 
 This project represents 8 weeks of hands-on learning and implementation:
 - **Real-world complexity**: E-commerce platform with multiple microservices
@@ -513,13 +513,13 @@ This project represents 8 weeks of hands-on learning and implementation:
 
 ---
 
-Built with ❤️ using modern DevOps practices
+Built with ��� using modern DevOps practices
 
-## 🚀 Live Deployment Status
-- **E-Commerce Platform**: https://axiler.subrotosharma.site ✅
-- **Grafana Dashboard**: https://grafana.subrotosharma.site ✅  
-- **Prometheus Metrics**: https://prometheus.subrotosharma.site ✅
-- **ArgoCD GitOps**: https://argocd.subrotosharma.site ✅
+## Live Deployment Status
+- **E-Commerce Platform**: https://axiler.subrotosharma.site 
+- **Grafana Dashboard**: https://grafana.subrotosharma.site   
+- **Prometheus Metrics**: https://prometheus.subrotosharma.site 
+- **ArgoCD GitOps**: https://argocd.subrotosharma.site 
 
-## 📊 Project Completion: 100%
+## Project Completion: 100%
 All DevOps requirements implemented and deployed successfully!
