@@ -1,0 +1,193 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>ShopEasy - Your Online Store</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Arial', sans-serif; line-height: 1.6; }
+            .header { background: #2c3e50; color: white; padding: 1rem 0; }
+            .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+            .logo { font-size: 1.8rem; font-weight: bold; }
+            .nav-links { display: flex; list-style: none; gap: 30px; }
+            .nav-links a { color: white; text-decoration: none; }
+            .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 20px; text-align: center; }
+            .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+            .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+            .btn { background: #e74c3c; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block; }
+            .btn:hover { background: #c0392b; }
+            .products { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+            .products h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; }
+            .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+            .product-card { border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; }
+            .product-card:hover { transform: translateY(-5px); }
+            .product-img { width: 100%; height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+            .product-info { padding: 20px; }
+            .product-title { font-size: 1.3rem; margin-bottom: 10px; }
+            .product-price { font-size: 1.5rem; color: #e74c3c; font-weight: bold; margin-bottom: 15px; }
+            .cart-btn { width: 100%; background: #27ae60; }
+            .cart-btn:hover { background: #229954; }
+            .footer { background: #34495e; color: white; text-align: center; padding: 40px 20px; }
+            .stats { background: #ecf0f1; padding: 40px 20px; }
+            .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+            .stat-item h3 { font-size: 2rem; color: #2c3e50; }
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <nav class="nav">
+                <div class="logo">ShopEasy</div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Cart (0)</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>Welcome to ShopEasy</h1>
+            <p>Discover amazing products at unbeatable prices</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </section>
+
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>1000+</h3>
+                    <p>Products</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50K+</h3>
+                    <p>Happy Customers</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Support</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>Uptime</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="products" id="products">
+            <h2>Featured Products</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">📱</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smartphone Pro</h3>
+                        <div class="product-price">$699.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">💻</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Laptop Ultra</h3>
+                        <div class="product-price">$1,299.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">🎧</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Wireless Headphones</h3>
+                        <div class="product-price">$199.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">⌚</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smart Watch</h3>
+                        <div class="product-price">$299.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">📷</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Digital Camera</h3>
+                        <div class="product-price">$899.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">🎮</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gaming Console</h3>
+                        <div class="product-price">$499.99</div>
+                        <button class="btn cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 ShopEasy. Powered by AWS EKS | Kubernetes | PostgreSQL | Redis</p>
+            <p>Monitoring: Prometheus + Grafana | Load Balancer: NGINX Ingress</p>
+        </footer>
+
+        <script>
+            document.querySelectorAll('.cart-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.textContent = 'Added!';
+                    this.style.background = '#27ae60';
+                    setTimeout(() => {
+                        this.textContent = 'Add to Cart';
+                        this.style.background = '#27ae60';
+                    }, 2000);
+                });
+            });
+        </script>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: frontend-html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80

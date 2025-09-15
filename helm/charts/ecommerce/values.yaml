@@ -1,0 +1,8 @@
+domain: axiler.subrotosharma.site
+replicas: 2
+image:
+  repository: nginx
+  tag: alpine
+ssl:
+  enabled: true
+  email: admin@subrotosharma.site

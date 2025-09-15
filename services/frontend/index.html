@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Platform</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>E-Commerce Platform</h1>
+    <p>Frontend service is running</p>
+    <div id="products"></div>
+    <script>
+        fetch('/api/products')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('products').innerHTML = 
+                    '<h2>Products:</h2>' + JSON.stringify(data, null, 2);
+            });
+    </script>
+</body>
+</html>

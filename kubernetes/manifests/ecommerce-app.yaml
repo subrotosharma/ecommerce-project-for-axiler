@@ -1,0 +1,287 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecommerce-app
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>ShopEasy - Your Online Store</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Arial', sans-serif; line-height: 1.6; }
+            .header { background: #2c3e50; color: white; padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 1000; }
+            .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+            .logo { font-size: 1.8rem; font-weight: bold; cursor: pointer; }
+            .nav-links { display: flex; list-style: none; gap: 30px; }
+            .nav-links a { color: white; text-decoration: none; cursor: pointer; padding: 10px; border-radius: 5px; transition: background 0.3s; }
+            .nav-links a:hover { background: #34495e; }
+            .content { margin-top: 80px; }
+            .page { display: none; }
+            .page.active { display: block; }
+            .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 20px; text-align: center; }
+            .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+            .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+            .btn { background: #e74c3c; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s; }
+            .btn:hover { background: #c0392b; }
+            .products { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+            .products h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; }
+            .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+            .product-card { border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; }
+            .product-card:hover { transform: translateY(-5px); }
+            .product-img { width: 100%; height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+            .product-info { padding: 20px; }
+            .product-title { font-size: 1.3rem; margin-bottom: 10px; }
+            .product-price { font-size: 1.5rem; color: #e74c3c; font-weight: bold; margin-bottom: 15px; }
+            .cart-btn { width: 100%; background: #27ae60; }
+            .cart-btn:hover { background: #229954; }
+            .footer { background: #34495e; color: white; text-align: center; padding: 40px 20px; }
+            .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
+            .cart-empty { text-align: center; padding: 60px 20px; color: #666; }
+            .login-form { max-width: 400px; margin: 60px auto; padding: 40px; border: 1px solid #ddd; border-radius: 10px; }
+            .form-group { margin-bottom: 20px; }
+            .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+            .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+            .cart-count { background: #e74c3c; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.8rem; margin-left: 5px; }
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <nav class="nav">
+                <div class="logo" onclick="showPage('home')">ShopEasy</div>
+                <ul class="nav-links">
+                    <li><a onclick="showPage('home')">Home</a></li>
+                    <li><a onclick="showPage('products')">Products</a></li>
+                    <li><a onclick="showPage('cart')">Cart <span class="cart-count" id="cartCount">0</span></a></li>
+                    <li><a onclick="showPage('login')">Login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="content">
+            <!-- Home Page -->
+            <div id="home" class="page active">
+                <section class="hero">
+                    <h1>Welcome to ShopEasy</h1>
+                    <p>Discover amazing products at unbeatable prices</p>
+                    <button class="btn" onclick="showPage('products')">Shop Now</button>
+                </section>
+                <section class="products">
+                    <h2>Featured Products</h2>
+                    <div class="product-grid" id="featuredProducts"></div>
+                </section>
+            </div>
+
+            <!-- Products Page -->
+            <div id="products" class="page">
+                <section class="products">
+                    <h2>All Products</h2>
+                    <div class="product-grid" id="allProducts"></div>
+                </section>
+            </div>
+
+            <!-- Cart Page -->
+            <div id="cart" class="page">
+                <section class="products">
+                    <h2>Shopping Cart</h2>
+                    <div id="cartItems"></div>
+                    <div id="cartTotal" style="text-align: center; margin: 30px 0; font-size: 1.5rem; font-weight: bold;"></div>
+                    <div style="text-align: center;">
+                        <button class="btn" onclick="checkout()">Checkout</button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Login Page -->
+            <div id="login" class="page">
+                <div class="login-form">
+                    <h2 style="text-align: center; margin-bottom: 30px;">Login</h2>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="password" placeholder="Enter your password">
+                    </div>
+                    <button class="btn" style="width: 100%;" onclick="login()">Login</button>
+                    <p style="text-align: center; margin-top: 20px;">
+                        Don't have an account? <a href="#" style="color: #e74c3c;">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2024 ShopEasy. Powered by AWS EKS | Kubernetes | PostgreSQL | Redis</p>
+        </footer>
+
+        <script>
+            const products = [
+                {id: 1, name: 'Smartphone Pro', price: 699.99, emoji: '📱'},
+                {id: 2, name: 'Laptop Ultra', price: 1299.99, emoji: '💻'},
+                {id: 3, name: 'Wireless Headphones', price: 199.99, emoji: '🎧'},
+                {id: 4, name: 'Smart Watch', price: 299.99, emoji: '⌚'},
+                {id: 5, name: 'Digital Camera', price: 899.99, emoji: '📷'},
+                {id: 6, name: 'Gaming Console', price: 499.99, emoji: '🎮'},
+                {id: 7, name: 'Tablet Pro', price: 599.99, emoji: '📱'},
+                {id: 8, name: 'Bluetooth Speaker', price: 149.99, emoji: '🔊'}
+            ];
+
+            let cart = [];
+
+            function showPage(pageId) {
+                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+                document.getElementById(pageId).classList.add('active');
+                
+                if (pageId === 'products') {
+                    renderProducts('allProducts', products);
+                } else if (pageId === 'cart') {
+                    renderCart();
+                } else if (pageId === 'home') {
+                    renderProducts('featuredProducts', products.slice(0, 6));
+                }
+            }
+
+            function renderProducts(containerId, productList) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = productList.map(product => `
+                    <div class="product-card">
+                        <div class="product-img">${product.emoji}</div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="btn cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function addToCart(productId) {
+                const product = products.find(p => p.id === productId);
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({...product, quantity: 1});
+                }
+                
+                updateCartCount();
+                
+                // Visual feedback
+                event.target.textContent = 'Added!';
+                event.target.style.background = '#27ae60';
+                setTimeout(() => {
+                    event.target.textContent = 'Add to Cart';
+                    event.target.style.background = '#27ae60';
+                }, 1000);
+            }
+
+            function removeFromCart(productId) {
+                cart = cart.filter(item => item.id !== productId);
+                updateCartCount();
+                renderCart();
+            }
+
+            function updateCartCount() {
+                const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+                document.getElementById('cartCount').textContent = count;
+            }
+
+            function renderCart() {
+                const container = document.getElementById('cartItems');
+                const totalContainer = document.getElementById('cartTotal');
+                
+                if (cart.length === 0) {
+                    container.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+                    totalContainer.innerHTML = '';
+                    return;
+                }
+                
+                container.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            $${item.price} x ${item.quantity}
+                        </div>
+                        <div>
+                            <button class="btn" onclick="removeFromCart(${item.id})">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalContainer.innerHTML = `Total: $${total.toFixed(2)}`;
+            }
+
+            function checkout() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                alert('Thank you for your order! Total: $' + cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2));
+                cart = [];
+                updateCartCount();
+                renderCart();
+            }
+
+            function login() {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if (email && password) {
+                    alert('Login successful! Welcome to ShopEasy.');
+                    showPage('home');
+                } else {
+                    alert('Please enter both email and password.');
+                }
+            }
+
+            // Initialize
+            renderProducts('featuredProducts', products.slice(0, 6));
+            updateCartCount();
+        </script>
+    </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ecommerce-frontend
+  template:
+    metadata:
+      labels:
+        app: ecommerce-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: ecommerce-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-frontend
+spec:
+  selector:
+    app: ecommerce-frontend
+  ports:
+  - port: 80
+    targetPort: 80
