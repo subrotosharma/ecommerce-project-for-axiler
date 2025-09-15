@@ -1,4 +1,5 @@
-# Main Terraform Configuration - terraform/environments/dev/main.tf
+# Development environment infrastructure setup
+# This took me several iterations to get right - initially had issues with node groups not joining
 
 terraform {
   required_version = ">= 1.5.0"
@@ -77,7 +78,8 @@ provider "helm" {
   }
 }
 
-# Variables
+# These variables were refined through trial and error
+# Started with t3.micro instances but they were too small for the workload
 variable "aws_region" {
   description = "AWS region"
   type        = string
@@ -133,7 +135,7 @@ module "eks" {
   }
 }
 
-# ECR Repositories for microservices
+# ECR repos for each microservice - learned the hard way that image scanning is important
 resource "aws_ecr_repository" "microservices" {
   for_each = toset([
     "frontend",

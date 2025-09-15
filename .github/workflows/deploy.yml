@@ -1,3 +1,5 @@
+# CI/CD Pipeline - took me forever to get this working properly
+# Had issues with AWS credentials and Docker registry authentication
 name: Deploy E-Commerce Platform
 on:
   push:
@@ -10,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    # Security scanning - learned this is crucial after finding vulnerabilities
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
@@ -24,6 +27,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v3
+    # Terraform validation - simplified after backend access issues
     - name: Terraform Validate
       run: |
         cd terraform/environments/dev

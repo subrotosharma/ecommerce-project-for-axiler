@@ -1,3 +1,4 @@
+# Frontend HTML - spent way too much time making this look decent
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -154,6 +155,8 @@ data:
     </body>
     </html>
 ---
+# Frontend deployment - using nginx to serve static content
+# Initially tried Apache but nginx is lighter and faster
 apiVersion: apps/v1
 kind: Deployment
 metadata:

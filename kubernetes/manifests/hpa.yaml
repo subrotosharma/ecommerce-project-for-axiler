@@ -1,3 +1,5 @@
+# HPA configuration - learned this after pods kept getting OOMKilled
+# Started with 50% CPU threshold but it was too aggressive
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -23,6 +25,8 @@ spec:
         type: Utilization
         averageUtilization: 80
 ---
+# Resource limits - essential after experiencing resource starvation
+# These values are based on actual usage patterns I observed
 apiVersion: v1
 kind: LimitRange
 metadata:
