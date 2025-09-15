@@ -468,6 +468,7 @@ This project represents 8 weeks of hands-on learning and implementation:
 - **Modern DevOps**: GitOps with ArgoCD, Infrastructure as Code, CI/CD automation
 - **Security-first**: Network policies, secrets management, vulnerability scanning
 - **Multi-environment**: Dev/Staging/Prod with proper promotion pipeline
+- **Auto-sync test**: Testing ArgoCD automatic synchronization
 
 ---
 
