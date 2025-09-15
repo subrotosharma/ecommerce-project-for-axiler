@@ -32,13 +32,13 @@ jobs:
       run: |
         cd terraform/environments/dev
         terraform fmt -check || echo "Terraform format check completed"
-        echo "✅ Terraform syntax validation passed"
-        echo "📋 Infrastructure code structure verified"
+        echo "Terraform syntax validation passed"
+        echo "Infrastructure code structure verified"
     - name: Terraform Plan (Demo)
       run: |
-        echo "✅ Terraform validation passed"
-        echo "📋 Infrastructure already deployed to AWS EKS"
-        echo "🔗 Live URLs:"
+        echo "Terraform validation passed"
+        echo "Infrastructure already deployed to AWS EKS"
+        echo "Live URLs:"
         echo "   - E-Commerce: https://axiler.subrotosharma.site"
         echo "   - Grafana: https://grafana.subrotosharma.site"
         echo "   - Prometheus: https://prometheus.subrotosharma.site"
@@ -51,10 +51,10 @@ jobs:
     - uses: actions/checkout@v4
     - name: Deployment Status
       run: |
-        echo "✅ Infrastructure already deployed and running"
-        echo "🚀 Live Production Environment:"
+        echo "Infrastructure already deployed and running"
+        echo "Live Production Environment:"
         echo "   - E-Commerce Platform: https://axiler.subrotosharma.site"
         echo "   - Grafana Dashboard: https://grafana.subrotosharma.site"
         echo "   - Prometheus Metrics: https://prometheus.subrotosharma.site"
         echo "   - ArgoCD GitOps: https://argocd.subrotosharma.site"
-        echo "📋 Deployment managed via ArgoCD GitOps"
+        echo "Deployment managed via ArgoCD GitOps"
