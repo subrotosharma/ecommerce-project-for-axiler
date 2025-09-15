@@ -378,12 +378,12 @@ Feature Branch � Dev �� Staging → Production
 ### ArgoCD
 - **URL**: https://argocd.subrotosharma.site
 - **Username**: admin
-- **Password**: Dl23kHFfOL44boNC
+- **Password**: [Check AWS Secrets Manager: argocd-admin-password]
 
 ### Grafana
 - **URL**: https://grafana.subrotosharma.site
 - **Username**: admin
-- **Password**: prom-operator
+- **Password**: [Check ConfigMap: monitoring/grafana-credentials]
 
 ### Prometheus
 - **URL**: https://prometheus.subrotosharma.site

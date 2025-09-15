@@ -24,7 +24,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "terraform-state-219400381702-dev"
+    bucket         = "terraform-state-${var.aws_account_id}-dev"
     key            = "dev/terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true

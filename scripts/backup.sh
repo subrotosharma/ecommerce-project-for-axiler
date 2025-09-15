@@ -13,7 +13,7 @@ kubectl get pv,pvc --all-namespaces -o yaml > $BACKUP_DIR/kubernetes/storage.yam
 
 # Backup Terraform state
 mkdir -p $BACKUP_DIR/terraform
-aws s3 cp s3://terraform-state-219400381702-dev/dev/terraform.tfstate $BACKUP_DIR/terraform/
+aws s3 cp s3://terraform-state-${AWS_ACCOUNT_ID}-dev/dev/terraform.tfstate $BACKUP_DIR/terraform/
 
 # Backup database (if accessible)
 echo "📊 Backup completed: $BACKUP_DIR"
