@@ -492,9 +492,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Contact
 
-- **Email**: your.email@example.com
-- **LinkedIn**: [Your Profile](https://linkedin.com/in/yourprofile)
-- **GitHub**: [@yourusername](https://github.com/yourusername)
+- **Email**: subroto.subro@gmail.com
+- **LinkedIn**: [Subroto Sharma](https://linkedin.com/in/subrotosharma)
+- **GitHub**: [@subrotosharma](https://github.com/subrotosharma)
+
+## 📚 Development Documentation
+
+- [Development Notes & Learning Process](docs/DEVELOPMENT_NOTES.md)
+- [Troubleshooting Guide](TROUBLESHOOTING.md)
+- [Architecture Decisions](docs/architecture/)
+
+## 🎯 Project Highlights
+
+This project represents 8 weeks of hands-on learning and implementation:
+- **Real-world complexity**: E-commerce platform with multiple microservices
+- **Production-ready**: SSL/TLS, monitoring, auto-scaling, disaster recovery
+- **Modern DevOps**: GitOps with ArgoCD, Infrastructure as Code, CI/CD automation
+- **Security-first**: Network policies, secrets management, vulnerability scanning
+- **Multi-environment**: Dev/Staging/Prod with proper promotion pipeline
 
 ---
 
